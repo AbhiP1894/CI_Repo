@@ -72,7 +72,7 @@ server.upload(uploadSpec)
     
            post {
                  always {
-                     jiraSendBuildInfo site: 'abhisheknewjirasite.atlassian.net', branch: 'C2-4-Admin-Page'
+                      jiraSendBuildInfo site: 'abhijeetfirstjirasite.atlassian.net', branch: 'CIC-2-LoginPage'
                  }
              }
         }
