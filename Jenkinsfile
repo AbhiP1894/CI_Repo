@@ -60,7 +60,7 @@ def server = Artifactory.server 'artifactory'
 "files": [
 {
       "pattern": "target/*.jar",
-"target": "AbhijeetRepo/"
+"target": "CI_Poc_Abhijeet/"
 }
 ]
 }"""
