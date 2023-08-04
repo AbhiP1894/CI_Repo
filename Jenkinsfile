@@ -23,7 +23,7 @@ pipeline {
              bat "mvn compile"
             }
         }
-        stages {
+       
             stage('SnykScanning') {
                 steps {
                     // One or more steps need to be included within the steps block.
@@ -31,7 +31,7 @@ pipeline {
                     snykTokenId: 'snyk-api-abhijieet'
                 }
             }
-        }
+        
 
 // stage('test'){
 // steps{
