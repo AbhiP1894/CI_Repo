@@ -22,6 +22,6 @@ jobs :
       run: snyk auth c9530c06-ec3b-4588-8838-1d35ab8f9116
       
     - name: Snyk Security Test
-      run: snyk test 
+      run: snyk test --all-project
       #env:
        # SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
