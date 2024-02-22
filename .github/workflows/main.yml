@@ -1,4 +1,4 @@
-name : ci-demo
+name : snyk-test
 on : push
 jobs :
   build_and_deploy :
@@ -6,7 +6,22 @@ jobs :
    steps: 
     - name: Checkout Repository
       uses: actions/checkout@v2
-    - name: maven compile
-      run: mvn compile
+          
     - name : Build
       run : mvn clean install
+      
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install Snyk CLI
+      run: npm install -g snyk
+      
+    - name: snyk authentication
+      run: snyk auth c9530c06-ec3b-4588-8838-1d35ab8f9116
+      
+    - name: Snyk Security Test
+      run: snyk test 
+      #env:
+       # SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
