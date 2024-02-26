@@ -3,25 +3,44 @@ on : push
 jobs :
   build_and_deploy :
    runs-on : ubuntu-latest
-   steps: 
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+   steps:
+      - uses: actions/checkout@master
+      - name: Set up Node.js
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+         
+      - name: Run Snyk to check for vulnerabilities
+        continue-on-error: true # To make sure that SARIF upload gets called
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --sarif-file-output=snyk.sarif
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
+   # steps: 
+   #  - name: Checkout Repository
+   #    uses: actions/checkout@v2
           
-    - name : Build
-      run : mvn clean install
+   #  - name : Build
+   #    run : mvn clean install
       
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
+   #  - name: Set up Node.js
+   #    uses: actions/setup-node@v2
+   #    with:
+   #      node-version: '14'
 
-    - name: Install Snyk CLI
-      run: npm install -g snyk
+   #  - name: Install Snyk CLI
+   #    run: npm install -g snyk
       
-    - name: snyk authentication
-      continue-on-error: true 
-      run: snyk auth ${{ secrets.SNYK_TOKEN }}
+   #  - name: snyk authentication
+   #    continue-on-error: true 
+   #    run: snyk auth ${{ secrets.SNYK_TOKEN }}
       
-    - name: Snyk Security Test
-      run: snyk test --all-projects --report --org=cybage-poc
+   #  - name: Snyk Security Test
+   #    run: snyk test --all-projects --report --org=cybage-poc
     
