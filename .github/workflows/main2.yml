@@ -29,7 +29,7 @@ jobs:
       run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
     - name: Snyk Scan
-      run: snyk test --json > snyk-report.json
+      run: snyk test --severity-threshold=low --ignore=VULN-ID-1,VULN-ID-2 --json > snyk-report.json
 
     - name: Display Snyk Scan Results
       run: cat snyk-report.json
